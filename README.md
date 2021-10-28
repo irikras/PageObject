@@ -1,1 +1,1 @@
-# PageObject  
+# PageObject [![Build status](https://ci.appveyor.com/api/projects/status/d4jjxfb9epmtjbvi/branch/master?svg=true)](https://ci.appveyor.com/project/irikras/pageobject/branch/master) 
