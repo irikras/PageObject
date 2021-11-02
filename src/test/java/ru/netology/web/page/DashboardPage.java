@@ -37,10 +37,10 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-    public TransferPage CardToTransfer(DataHelper.CardInfo cardInfo) {
+    public TransferPage findCardToTransfer(DataHelper.CardInfo cardInfo) {
         cards
                 .findBy(text(cardInfo.getCardNumber().substring(12, 16)))
-                .click();
+                .$("button").click();
         return new TransferPage();
     }
 }

@@ -20,6 +20,24 @@ class MoneyTransferTest {
     }
 
     @Test
+    void shouldReplenishmentOfTheFirstCard() {
+        var loginPage = new LoginPage();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        var dashboardPage = verificationPage.validVerify(verificationCode);
+        int amnt = 4000;
+        var balanceFirstCardAfterTransfer = dashboardPage.getFirstCardBalance() + amnt;
+        var balanceSecondCardAfterTransfer = dashboardPage.getSecondCardBalance() - amnt;
+        var transferPage = dashboardPage.findCardToTransfer(DataHelper.getFirstCardNumber());
+        transferPage.transferCard(DataHelper.getSecondCardNumber(), amnt);
+        var newBalanceFirstCard = DashboardPage.getFirstCardBalance();
+        var newBalanceSecondCard = DashboardPage.getSecondCardBalance();
+        assertEquals(balanceFirstCardAfterTransfer, newBalanceFirstCard);
+        assertEquals(balanceSecondCardAfterTransfer, newBalanceSecondCard);
+    }
+
+    @Test
     void shouldReplenishmentOfTheSecondCard() {
         var loginPage = new LoginPage();
         var authInfo = DataHelper.getAuthInfo();
@@ -27,9 +45,9 @@ class MoneyTransferTest {
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         var dashboardPage = verificationPage.validVerify(verificationCode);
         int amnt = 3000;
-        var balanceFirstCardAfterTransfer = DashboardPage.getFirstCardBalance() - amnt;
-        var balanceSecondCardAfterTransfer = DashboardPage.getSecondCardBalance() + amnt;
-        var transferPage = dashboardPage.CardToTransfer(DataHelper.getSecondCardNumber());
+        var balanceFirstCardAfterTransfer = dashboardPage.getFirstCardBalance() - amnt;
+        var balanceSecondCardAfterTransfer = dashboardPage.getSecondCardBalance() + amnt;
+        var transferPage = dashboardPage.findCardToTransfer(DataHelper.getSecondCardNumber());
         transferPage.transferCard(DataHelper.getFirstCardNumber(), amnt);
         var newBalanceFirstCard = DashboardPage.getFirstCardBalance();
         var newBalanceSecondCard = DashboardPage.getSecondCardBalance();
